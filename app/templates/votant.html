@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Voter{% endblock %}
+
+{% block content %}
+
+<style>
+/* Conteneur principal */
+.vote-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulaire */
+.vote-form {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels */
+.form-label {
+  color: #002244; /* Bleu foncé cohérent */
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Champs de saisie */
+.form-control, .form-select {
+  border: 2px solid #003366;
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #0055aa;
+  box-shadow: 0 0 8px rgba(0, 85, 170, 0.5);
+}
+
+/* Bouton */
+.btn-vote {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  background: #003366;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.btn-vote:hover {
+  background: #002244;
+  cursor: pointer;
+}
+</style>
+
+<div class="vote-container">
+  <h2 class="text-center mb-4">Vote Personne</h2>
+
+  <form method="POST" action="/votant" class="vote-form">
+    <div class="mb-3">
+      <label for="nom" class="form-label">Nom</label>
+      <input type="text" class="form-control form-control-lg" id="nom" name="nom" placeholder="Entrez votre nom" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="prenom" class="form-label">Prénom</label>
+      <input type="text" class="form-control form-control-lg" id="prenom" name="prenom" placeholder="Entrez votre prénom" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="date_naissance" class="form-label">Date de Naissance</label>
+      <input type="date" class="form-control form-control-lg" id="date_naissance" name="date_naissance" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="identifiant" class="form-label">Identifiant</label>
+      <input type="text" class="form-control form-control-lg" id="identifiant" name="identifiant" placeholder="Entrez votre identifiant" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="choix" class="form-label">Choix du Candidat</label>
+      <select class="form-select form-select-lg" id="choix" name="choix" required>
+        <option value="" disabled selected>-- Sélectionnez un candidat --</option>
+        <option value="candidat1">Candidat 1</option>
+        <option value="candidat2">Candidat 2</option>
+        <option value="candidat3">Candidat 3</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-vote">🗳 Voter</button>
+  </form>
+</div>
+
+{% endblock %}
+

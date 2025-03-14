@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Centre de Comptage{% endblock %}
+
+{% block content %}
+
+<style>
+/* Conteneur principal */
+/* Conteneur principal */
+.counting-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tableau */
+.counting-table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* En-tête de table */
+.table thead th {
+  background: #003366; /* Bleu foncé */
+  color: white; /* Texte en blanc */
+  font-size: 1rem; /* Plus grand pour la lisibilité */
+  font-weight: bold; /* Texte en gras */
+  text-transform: uppercase; /* Majuscules */
+  padding: 14px; /* Plus d'espace */
+  border-bottom: 2px solid #dee2e6; /* Séparation nette */
+}
+
+/* Corps de table */
+.table th, .table td {
+  text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody tr:hover {
+  background: #e9f2ff;
+}
+
+/* Texte chiffré */
+.encrypted-text {
+  font-size: 0.9rem;
+  color: #003366;
+  word-break: break-all;
+}
+
+</style>
+
+
+  <h2 class="text-center mb-4">Centre de Comptage</h2>
+
+  <div class="table-responsive counting-table">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Date  Naissance</th>
+          <th>Identifiant</th>
+          <th>Bulletin (chiffré)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set votants_uniques = [] %}  
+
+          {% for vote in votes %}
+            {% if vote.choix_chiffre and vote.choix_chiffre.startswith("-----BEGIN PGP MESSAGE-----") %}
+             {% if (vote.nom, vote.prenom) not in votants_uniques %}
+              {% set _ = votants_uniques.append((vote.nom, vote.prenom)) %}
+                <tr>
+                 <td>{{ vote.nom }}</td>
+                 <td>{{ vote.prenom }}</td>
+                 <td>{{ vote.date_naissance }}</td>
+                 <td>{{ vote.identifiant }}</td>
+                 <td><code class="encrypted-text">{{ vote.choix_chiffre }}</code></td>
+                </tr>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+

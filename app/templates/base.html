@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Vote App{% endblock %}</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  
+  <!-- Styles personnalisés -->
+  <style>
+    body {
+      background: url('https://digital-solutions.post.ch/hubfs/2023/E-Voting/EvotingSicherheit1872x1053.jpg') no-repeat center center fixed; /* Remplacez 'votre-image.jpg' par le chemin de votre image */
+      background-size: cover;
+      font-family: 'Roboto', sans-serif;
+      
+    }
+    
+    /* Navbar */
+    .navbar {
+     
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 10px 0;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    .navbar-brand {
+  color: #001933 !important;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.navbar-nav .nav-link {
+  color: #001933 !important; /* Utilisation de la même couleur que .navbar-brand */
+  font-size: 1.2rem;
+  padding: 15px 25px;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4); /* Ombre blanche légère pour améliorer la lisibilité */
+ 
+  border-radius: 5px; /* Coins arrondis pour un look plus moderne */
+  font-weight: bolder;
+}
+
+.navbar-nav .nav-link:hover {
+  color: white !important; /* Une couleur plus claire au survol */
+  text-shadow: 0 1px 5px rgba(255, 255, 255, 0.6); /* Ombre plus prononcée au survol */
+  background-color: rgba(0, 0, 0, 0.1); /* Fond plus sombre au survol pour plus de contraste */
+}
+
+
+    
+    /* Conteneur principal */
+    .container {
+      max-width: 1200px;
+      margin-top: 30px;
+    }
+    
+    /* Titres */
+    h2 {
+      font-weight: 600;
+      color: #003366;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #0055aa;
+      padding-bottom: 10px;
+    }
+
+    /* Paragraphe centré avec texte transparent */
+    .transparent-text {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0); /* Texte transparent */
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.6); /* Ombre portée pour rendre le texte visible */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+
+    /* Section des informations */
+   /* Section des informations */
+   .info-section {
+      background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+      padding: 40px;
+      border-radius: 10px;
+      margin-top: 100px;
+      text-align: center;
+    }
+    /* Titres dans la section d'informations */
+.info-section h2 {
+  font-weight: 600;
+  color: rgba(0, 51, 102, 0.7); /* Bleu cohérent avec #003366 mais transparent */
+  margin-bottom: 20px;
+  border-bottom: 3px solid #0055aa;
+  padding-bottom: 10px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Paragraphe dans la section d'informations */
+.info-section p {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  color: rgba(105, 105, 105, 0.8);
+}
+
+    
+    /* Footer */
+    .footer {
+     
+      color: #000000;
+      text-align: center;
+      padding: 15px;
+      margin-top: 50px;
+      border-top: 2px solid #e5e5e5;
+    }
+    .footer a {
+      color: #0055aa;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+   <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="/">Vote App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/votant">Voter</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/comptage">Centre de Comptage</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/depouillement">Dépouillement</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+   <!-- Contenu principal -->
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} mt-3" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    {% block content %}
+    {% endblock %}
+  </div>
+  
+  <!-- Section des informations sur Vote App -->
+  <div class="container info-section">
+    <h2>À propos de Vote App</h2>
+    <p>
+        Vote App est une application de vote électronique sécurisé, permettant aux citoyens de voter rapidement et en toute sécurité, tout en garantissant la confidentialité des votes. Son interface simple et intuitive offre une expérience fluide et accessible à tous.
+      </p>
+      <p>
+        Que vous soyez citoyen ou administrateur, Vote App simplifie le processus de vote et assure un dépouillement fiable et transparent des résultats.
+      </p>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Vote App. Tous droits réservés. | <a href="#">Mentions légales</a></p>
+    </div>
+  </footer>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Centre de Dépouillement{% endblock %}
+
+{% block content %}
+
+<style>
+/* Conteneur principal */
+.decryption-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tableau */
+.decryption-table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table thead {
+  background: #003366;
+  color: white;
+}
+
+.table th, .table td {
+  text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody tr:hover {
+  background: #e9f2ff;
+}
+
+/* Bulletin déchiffré */
+.decrypted-bulletin {
+  font-size: 1.2rem; /* Taille de police augmentée */
+  color:#003366; /* Bleu plus doux mais toujours distinct */
+  font-weight: normal; /* Pas trop gras pour améliorer la lisibilité */
+  word-break: break-word;
+  letter-spacing: 0.5px; /* Espacement des lettres pour aérer le texte */
+  line-height: 1.5; /* Augmenter l'espacement entre les lignes pour un meilleur confort de lecture */
+  font-family: 'Arial', sans-serif; /* Police sans-serif pour une meilleure lisibilité */
+}
+
+
+
+/* Statut */
+.status-success {
+  color: green;
+  font-weight: bold;
+}
+
+.status-error {
+  color: red;
+  font-weight: bold;
+}
+/* Style spécifique pour les en-têtes */
+.table thead th {
+  background: #003366; /* Bleu foncé */
+  color: white; /* Texte en blanc */
+  font-size: 1rem; /* Plus grand pour la lisibilité */
+  font-weight: bold; /* Texte en gras */
+  text-transform: uppercase; /* Majuscules */
+  padding: 14px; /* Plus d'espace */
+  border-bottom: 2px solid #dee2e6; /* Séparation nette */
+}
+
+</style>
+
+
+  <h2 class="text-center mb-4">Centre de Dépouillement</h2>
+
+  <div class="table-responsive decryption-table">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Identifiant</th>
+          <th>Bulletin Déchiffré</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in results %}
+          {% if result.bulletin != 'Erreur de déchiffrement' and result.statut != 'Erreur: Déchiffrement échoué' %}
+            <tr>
+              <td>{{ result.identifiant }}</td>
+              <td><code class="decrypted-bulletin">{{ result.bulletin }}</code></td>
+              <td class="{% if 'Erreur' in result.statut %}status-error{% else %}status-success{% endif %}">
+                {{ result.statut }}
+              </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
